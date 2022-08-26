@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+
+    <record id="res_partner_memebership_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.memebership.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position='after'>
+                    <field name="is_member_respartner"/>
+                    <field name="membership_level_respartner" attrs="{'invisible': [('is_member_respartner', '=' , False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="customer_respartner_memebership_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">customer.respartner.memebership.form.inherit</field>-->
+<!--        <field name="model">res.partner</field>-->
+<!--        <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='property_product_pricelist']" position="after">-->
+<!--                    <field name="filter_customer_master"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+
+</odoo>

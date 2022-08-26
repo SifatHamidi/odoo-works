@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+
+
+        <record id="membership_level_search_view" model="ir.ui.view">
+            <field name="name">membership.level.search</field>
+            <field name="model">membership.level</field>
+            <field name="arch" type="xml">
+                <search string= 'Membership Level'>    
+                    <field name ='ranking'/> 
+                    <field name ='level_name'/> 
+                </search>
+            </field>
+        </record>
+
+        <record id="membership_level_form_view" model="ir.ui.view">
+            <field name="name">membership.level.form</field>
+            <field name="model">membership.level</field>
+            <field name="arch" type="xml">
+                <form string= 'Membership Level'>  
+                    <sheet>
+                        <group>
+                            <field name ='display_name'/> 
+                            <field name ='level_name'/>
+                            <field name ='ranking'/>
+                        </group>
+                    </sheet>  
+                </form>
+            </field>
+        </record>
+
+        <record id="membership_level_tree_view" model="ir.ui.view">
+            <field name="name">membership.level.tree</field>
+            <field name="model">membership.level</field>
+            <field name="arch" type="xml">
+                <tree string= 'Membership Level'>    
+                    <field name ='ranking' widget="handle"/>
+                    <field name ='display_name'/> 
+                    <field name ='level_name' optional="hide"/> 
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_membership_level_menu" model="ir.actions.act_window">
+            <field name="name">Membership Level</field>
+            <field name="res_model">membership.level</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new batch, the first step of a new one!
+                </p>       
+            </field>
+        </record>
+
+        <menuitem id="membership_level_menu" 
+        name="Membership Level" parent="sale.menu_sale_config" 
+        action="action_membership_level_menu"
+        sequence="100"/>
+
+</odoo>

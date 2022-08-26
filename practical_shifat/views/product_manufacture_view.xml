@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+    <record id="product_manufacture_form_view" model="ir.ui.view">
+        <field name="name">product.manufacture.form</field>
+        <field name="model">product.manufacture</field>
+        <field name="arch" type="xml">
+            <form string= 'Manufacturer'>
+              <sheet>
+              <group>
+                <!-- <span class="o_form_label o_td_label" name="address_format">
+                <field name="address" class="font-weight-bold"/> -->
+                 <b>Address</b>
+                <!-- </span> -->
+                </group>
+                <group>
+                  <group>
+                    <div class="o_address_format">
+                     <field name="name"/>
+                      <field name="street_name" placeholder="Street Name" class="o_address_street" nolabel="1"/>
+                      <field name="building" placeholder="Building"/>
+                      <field name="floor_room" placeholder="Floor"/>
+                      <field name="street_name2" placeholder="Street 2" class="o_address_street" nolabel="1"/>
+                      <field name="city_name" placeholder="City" class="o_address_city"/>
+                      <field name="state_id" class="o_address_state" placeholder="State"/>
+                      <field name="zip_code" placeholder="ZIP" class="o_address_zip" />
+                      <field name="country_id" placeholder="Country" class="o_address_country" />
+                    </div>
+                  </group>
+                  <group>
+                    <field name="email" widget="email" required="1"/>
+                    <field name ='phone_number' widget="phone"/>
+                  </group>
+                </group>
+              </sheet>
+            </form>
+        </field>
+      </record>
+
+
+    <record id="product_manufacture_tree_view" model="ir.ui.view">
+        <field name="name">product.manufacture.tree</field>
+        <field name="model">product.manufacture</field>
+        <field name="arch" type="xml">
+            <tree string= 'Manufacturer'>
+               <field name ='name'/>     
+               <field name ='country_id'/>
+               <field name ='city_name' optional="hide" />
+               <field name='state_id' optional="hide"/>
+               <field name ='email'/>
+               <field name ='zip_code' optional="hide"/>  
+               <field name ='phone_number' optional="hide"/>
+            </tree>
+        </field>
+      </record>
+
+       <record id="action_product_manufacture_purchase" model="ir.actions.act_window">
+            <field name="name">Manufacturer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.manufacture</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new batch, the first step of a new one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id ="purchase_product_manufacture" 
+            name="Manufacturer" groups="purchase.group_purchase_manager"
+            parent="purchase.menu_procurement_management"
+            action="action_product_manufacture_purchase"/>
+
+
+</odoo>

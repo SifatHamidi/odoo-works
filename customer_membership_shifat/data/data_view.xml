@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <data>
+    
+       <record id="memebership_level_demo_data" model="membership.level">
+            <field name="level_name">Bronze</field>
+            <field name="ranking">1</field>
+        </record>
+
+       <record id="memebership_level_demo_data_2" model="membership.level">
+            <field name="level_name">Silver</field>
+            <field name="ranking">2</field>
+        </record>
+
+       <record id="memebership_level_demo_data_3" model="membership.level">
+            <field name="level_name">Gold</field>
+            <field name="ranking">3</field>
+        </record>      
+
+    </data>
+
+
+
+</odoo>

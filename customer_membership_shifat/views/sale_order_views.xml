@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+
+    <record id="sales_order_memebership_form_inherit" model="ir.ui.view">
+        <field name="name">sales.order.memebership.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+           <xpath expr="//field[@name='partner_id']" position='after'>
+                    <field name="memership_level_sales_order"/>
+               <field name="memership_level_name"/>
+            </xpath>
+            <xpath expr="//form/sheet/*" position='inside'>
+                <widget name="web_ribbon" title="Bronze" bg_color="bg-success" attrs="{'invisible': [('memership_level_name', '!=', 'Bronze')]}"/>
+                <widget name="web_ribbon" title="Gold" bg_color="bg-success" attrs="{'invisible': [('memership_level_name', '!=', 'Gold')]}"/>
+                <widget name="web_ribbon" title="Silver" bg_color="bg-success" attrs="{'invisible': [('memership_level_name', '!=', 'Silver')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

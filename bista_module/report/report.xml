@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id ="report_bista_trainee" model="ir.actions.report">
+        <field name="name">Trainee Details</field>
+        <field name="model">bista.trainee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bista_module.report_bista_trainee1</field>
+        <field name="report_file">bista_module.report_bista_trainee1</field>
+        <field name="print_report_name">'Trainee-Details-%s'%(object.trainee_id)</field>
+        <field name="binding_model_id"  ref= "model_bista_trainee"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <template id="report_bista_trainee1">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+             <t t-call="web.external_layout">
+                <div class="page" name="footer_left_column" position="inside">
+                    <p>
+                        <h2 t-field="doc.name"/>
+                        <h2 t-field="doc.trainee_id"/>
+                        <h2 t-field="doc.designation"/>
+                       <!-- <span t-field="doc.name"/> -->
+                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', (doc.name,doc.trainee_id,doc.email,doc.designation.name), 400, 400)"
+                            alt="QR Code" style="height:100px;" />
+                        <!-- Trainee Record name <span t-field="o.name"/> -->
+                    <!-- <span style="margin-right" > -->
+                    <!-- </span> -->
+                    </p>
+                </div>
+              </t>
+            </t>
+        </t>
+        
+    </template>
+    
+</odoo>

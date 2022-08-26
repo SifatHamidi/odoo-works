@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+customer_membership_shifat.access_membership_level,access_membership_level,customer_membership_shifat.model_membership_level,sales_team.group_sale_manager,1,1,1,1
+customer_membership_shifat.access_vendor_report_purchase_wizard,access_vendor_report_purchase_wizard,customer_membership_shifat.model_vendor_report_purchase_wizard,base.group_user,1,1,1,1
+customer_membership_shifat.access_vendor_report_purchase,access_vendor_report_purchase,customer_membership_shifat.model_vendor_report_purchase,,1,1,1,1
+
+

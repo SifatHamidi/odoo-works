@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<!-- Trainee -->
+
+    <record id="bista_trainee_tree_view" model="ir.ui.view">
+        <field name="name">bista.trainee.tree</field>
+        <field name="model">bista.trainee</field>
+        <field name="arch" type="xml">
+            <tree string= 'Trainee' decoration-primary="status=='new'" decoration-danger="status=='rejected'" decoration-info="status=='training'" decoration-success="status=='employed'" >
+               <field name ="name" widget="text"/>     
+               <field name ='trainee_id' optional="hide"/>
+               <field name='date'/>
+               <field name="priority" optional="hide" widget="priority"/>
+               <field name="activity_ids" optional="hide" widget="list_activity"/>
+               <field name='age' optional="hide"/>
+               <field name='designation' widget="badge"/>
+               <field name ="email" optional="hide"/>     
+               <field name ='status' optional="hide" decoration-primary="status=='new'" decoration-info="status=='training'"
+                    decoration-danger="status=='rejected'" decoration-success="status=='employed'" widget="badge"/>
+
+               <field name='location' optional="hide"/>
+               <field name='dob' optional="hide"/> 
+               <field name='is_true' optional="hide" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bista_trainee_form_view" model="ir.ui.view">
+        <field name="name">bista.trainee.form</field>
+        <field name="model">bista.trainee</field>
+        <field name="arch" type="xml">
+        <form string= 'Trainee'>
+            <header>
+                <button name="%(bista_module.action_bista_trainee_location)d" type="action" string="Locate" class="oe_highlight" />
+                <button name="action_sent_email" type="object" string="Send Email" class="oe_highlight" />
+                <field name="status" widget="statusbar" options="{'clickable': '1'}"/>
+                <!-- statusbar_visible="draft,sent,sale" -->
+            </header>
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+            <header>
+                  <button name="action_post" type="object" string="Confirm" class="oe_stat_button" icon="fa-check-circle"/>
+            </header>
+            </div>
+                <field name ="image" widget="image"  nolabel="1" class="oe_avatar"/>
+                <h1><field name ="trainee_id" readonly="1" class="oe_title"/></h1>
+                <h2><field name="priority" widget="priority"/></h2>
+               <group>
+                  <group>
+                 <strong>
+                    <field name ="name"/>
+                </strong>
+                      <field name ="first_name" placeholder="Enter your first name"/>
+                      <field name ="last_name" placeholder="Enter your last name"/>
+                      <field name="emp_code" placeholder="Enter your emp code"/> 
+                      <field name ="gender" placeholder="Enter your gender" widget="gender"/>
+                      <field name ="email" placeholder="Enter your email" widget="email"/>
+                      <field name='age'/>
+                      <field name="is_true"/>
+                </group>
+                  <group>
+                      <field name="dob" options="{'datepicker':{'maxDate': 'now'}}"/>  
+                      <field name="date" options="{'datepicker':{'maxDate': 'now'}}"/> 
+                      <field name ="trainee_id"/>
+                      <field name="location"/>
+                      <field name="trainer_details_ids" widget='many2many_tags'/>
+                      <field name="joining_date" options="{'datepicker':{'warn_future': 'true'}}"/>
+                      <button name="action_url" type="object" string="Press" class="oe_highlight" />
+                    </group>
+                </group>
+
+                <notebook>
+                        <page string="Description" name="contacts description">
+                              <field name='description' placeholder="Type your description" options="{'collaborative':true}"/> 
+                        </page>
+                        <page string="Evaluation" name="evaluation">
+                          <group>
+                            <field name='designation'/>
+                            <field name='linkedin_id'/>
+                          </group>
+                        </page>
+                </notebook>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+               </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="bista_trainee_kanban_view" model="ir.ui.view">
+            <field name="name">bista.trainee.kanban</field>
+            <field name="model">bista.trainee</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name ="id"/>
+                    <field name ="name"/>
+                    <field name ="image" widget="image"/>
+                    <field name ="trainee_id"/>
+                    <field name ="gender"/>
+                    <field name="emp_code"/>
+                    <field name='age'/>
+                    <field name ="email"/> 
+                    <field name="designation"/> 
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class ="o_kanban_image" >
+                                <!-- t-attf-style="background-image:url('#{kanban_image('bista.trainee','image', record.id.raw_value,placeholder)}')"> -->
+                                  <img alt="Avatar" t-att-src ="kanban_image('bista.trainee','image', record.id.raw_value)"/>
+                                </div>
+                                <strong ><field name ="name" widget="badge"/></strong>
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li>Gender: <field name ="gender" widget="gender"/></li>
+                                        <li>Age: <field name ="age"/> </li>
+                                        <li>Email: <field name ="email" widget="email"/></li>
+                                        <li>Trainee ID: <field name="trainee_id"/></li>
+                                        <li>Designation: <field name="designation"/></li>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </ul>
+                                </div>
+                           </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="bista_trainee_activity_view" model="ir.ui.view">
+                <field name="name">bista.trainee.activity</field>
+                <field name="model">bista.trainee</field>
+                <field name="arch" type="xml">
+                    <activity string="Trainee Schedule">
+                        <field name="id"/>
+                        <field name="name"/>
+                        <templates>
+                            <div t-name="activity-box">
+                                <img t-att-src="activity_image('bista.trainee', 'image', record.id.raw_value)" role="img" t-att-title="record.id.value" t-att-alt="record.id.value"/>
+                                <div>
+                                    <field name="name" display="full"/>
+                                    <field name="designation" display="full" muted="1"/>
+                                </div>
+                            </div>
+                        </templates>
+                    </activity>
+                </field>
+        </record>
+
+
+        <record id="bista_trainee_calendar_view" model="ir.ui.view">
+            <field name="name">bista.trainee.calendar</field>
+            <field name="model">bista.trainee</field>
+            <field name="arch" type="xml">
+                <calendar string= "Trainee Calender" date_start="date" hide_time ="True" mode="month" color= "trainee_id" quick_add= "False"
+                 event_open_popup="True" form_view_id ="%(bista_module.bista_trainee_tree_view)d">
+                    <field name="trainee_id"/>
+                    <field name="status" filters="1" invisible="1"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="bista_trainee_search_view" model="ir.ui.view">
+            <field name="name">bista.trainee.search</field>
+            <field name="model">bista.trainee</field>
+            <field name="arch" type="xml">
+                <search>  
+                    <field name ="name"/>
+                    <field name ="trainee_id"/>
+                    <field name="emp_code"/>
+                    <field name ="gender"/> 
+                    <field name ="email" widget="email"/> 
+                    <field name="designation"/> 
+                    <field name="location"/>
+                    <filter name ="filter_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                    <filter name ="filter_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                    <!-- <separator/> -->
+                    <filter name ="filter_age" string="Age" domain="[('age', '&lt;=', 30)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="group_by_status" context="{'group_by': 'status'}"/>
+                        <filter string="Location" name="group_by_location" context="{'group_by': 'location'}"/>
+                        <filter string="Designation" name="group_by_designation" context="{'group_by': 'designation'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+<!--trainee_Location-->
+
+
+    <record id="bista_trainee_location_tree_view" model="ir.ui.view">
+        <field name="name">bista.location.tree</field>
+        <field name="model">bista.location</field>
+        <field name="arch" type="xml">
+            <tree string= 'Trainee'>
+               <field name ="country_id"/>     
+               <field name ="state_id" />
+               <field name="city"/>
+               <field name ="street_1" optional="hide"/>
+               <field name ="street_2" optional="hide"/>
+               <field name ="location" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bista_trainee_location_form_view" model="ir.ui.view">
+        <field name="name">bista.location.form</field>
+        <field name="model">bista.location</field>
+        <field name="arch" type="xml">
+            <form string= 'Location'>
+            <sheet>
+               <group>
+                  <group>
+                      <field name ="location" placeholder="Enter your location"/>
+                      <field name ="country_id" class="o_address_country" placeholder="Enter country name"/>
+                      <field name ="state_id" placeholder="Enter state name" class="o_address_state"/>
+                  </group>
+
+                  <group>
+                      <field name ="city"/>
+                      <field name="street_1"/>  
+                      <field name="street_2"/> 
+                   </group>
+                </group>
+               </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+<!-- Trainer -->
+
+      <record id="bista_trainer_tree_view" model="ir.ui.view">
+        <field name="name">bista.trainer.tree</field>
+        <field name="model">bista.trainer</field>
+        <field name="arch" type="xml">
+            <tree string= 'Trainer'>
+               <field name ="name"/>
+            </tree>
+        </field>
+    </record>
+
+
+        <record id="bista_trainer_form_view" model="ir.ui.view">
+        <field name="name">bista.trainer.form</field>
+        <field name="model">bista.trainer</field>
+        <field name="arch" type="xml">
+            <form string= 'Trainer'>
+            <sheet>
+                <field name ="profile_image" widget="image" placeholder="Upload your image" nolabel="1" class="oe_avatar"/>
+                  <group>
+                      <field name ="name" placeholder="Enter your name"/>
+                      <field name ="first_name" placeholder="Enter your first name" nolabel="1"/>
+                      <field name ="last_name" placeholder="Enter your last name" nolabel="1"/>
+                  </group>
+
+                <notebook>
+                        <page string="Trainee" name="Trainee Information">
+                            <field name="trainee_details_ids" widget="many2many">
+                                <tree esitable='bottom'>
+                                    <field name="name"/>
+                                    <field name="trainee_id"/>
+                                    <field name="emp_code" optional="hide"/>
+                                    <field name="designation"/>
+                                    <field name="email"/>
+                                    <field name="joining_date"/>
+                                    <field name="location"/>
+                                    <field name="status"/>
+                                </tree>
+                            </field>
+                        </page>
+                </notebook>
+               </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+        <record id="bista_trainer_kanban_view" model="ir.ui.view">
+            <field name="name">bista.trainer.kanban</field>
+            <field name="model">bista.trainer</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name ="id"/>
+                    <field name ="name"/>
+                    <field name ="profile_image" widget="image"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class ="o_kanban_image">
+                                <img alt="Avatar" t-att-src ="kanban_image('bista.trainer','profile_image', record.id.raw_value)"/>
+                            </div>
+                                    <strong>
+                                       <field name ="name"/>
+                                    </strong>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+<!-- Training_Subject -->
+
+      <record id="bista_training_subject_tree_view" model="ir.ui.view">
+        <field name="name">bista.training.subject.tree</field>
+        <field name="model">bista.training.subject</field>
+        <field name="arch" type="xml">
+            <tree string= 'Training Subject'>
+               <field name ="name"/>
+               <field name ="description"/>
+               <field name ="topics"/>
+               <field name ="trainers" optional="hide" />
+            </tree>
+        </field>
+    </record>
+
+      <record id="bista_training_subject_form_view" model="ir.ui.view">
+        <field name="name">bista.training.subject.form</field>
+        <field name="model">bista.training.subject</field>
+        <field name="arch" type="xml">
+            <form string= 'Training Subject'>
+            <sheet>
+                  <group>
+                  <group>
+                      <field name ="name" />
+                      <field name ="description"/>
+                  </group>
+                    <group>
+                      <field name ="trainers" widget="many2many_tags"/>
+                      <field name ="topics" widget="one2many_tags"/>
+                  </group>
+                  </group>
+               </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+<!-- Designation_trainee -->
+
+    <record id="bista_trainee_designation_tree_view" model="ir.ui.view">
+        <field name="name">bista.trainee.designation.tree</field>
+        <field name="model">bista.trainee.role</field>
+        <field name="arch" type="xml">
+            <tree string= 'Designation' editable="top">
+               <field name ="name"/>     
+               <field name ="sequence"/>
+            </tree>
+        </field>
+    </record>
+
+
+<!-- Training Topic -->
+
+    <record id="bista_trainee_topic_tree_view" model="ir.ui.view">
+        <field name="name">bista.training.topics.tree</field>
+        <field name="model">bista.training.topics</field>
+        <field name="arch" type="xml">
+            <tree string= "Traing Subject">
+               <field name ="name"/>     
+               <field name ="subject"/>
+            </tree>
+        </field>
+    </record>
+
+
+        <record id="bista_training_topic_form_view" model="ir.ui.view">
+        <field name="name">bista.training.topics.form</field>
+        <field name="model">bista.training.topics</field>
+        <field name="arch" type="xml">
+            <form string= 'Training Subject'>
+            <sheet>
+                  <group>
+                      <field name ="name" />
+                      <field name ="subject" widget="many2one_tags"/>
+                  </group>
+               </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+<!-- Training Stages -->
+
+
+
+ <record id="bista_training_stages_kanban_view" model="ir.ui.view">
+            <field name="name">bista.training.stages.kanban</field>
+            <field name="model">bista.training.stages</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name ="id"/>
+                    <field name ="name"/>     
+                    <field name ="status"/>
+                    <field name ="available_batch"/>     
+                    <field name ="available_training_record"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <strong>
+                                <field name ="name"/>
+                            </strong>
+                            <ul>
+                                <li>Status: <field name ="status"/></li>
+                                <li>Available Batch: <field name ="available_batch"/></li>
+                                <li>Available Training Record: <field name="available_training_record"/></li>
+                            </ul>
+                        </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="bista_training_stages_form_view" model="ir.ui.view">
+        <field name="name">bista.training.stages.form</field>
+        <field name="model">bista.training.stages</field>
+        <field name="arch" type="xml">
+            <form string= 'Training Stages'>
+            <sheet>
+            <group>
+                <group>
+                    <field name ="name" />     
+                    <field name ="status" placeholder="Enter the status"/>
+                </group>
+                <group>
+                    <field name ="available_batch"/>     
+                    <field name ="available_training_record"/>
+                </group>
+             </group>
+               </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="bista_training_stages_tree_view" model="ir.ui.view">
+        <field name="name">bista.training.stages.tree</field>
+        <field name="model">bista.training.stages</field>
+        <field name="arch" type="xml">
+            <tree string= "Training Stages">
+               <field name ="name"/>     
+               <field name ="status"/>
+                <field name ="available_batch" optional="hide"/>     
+               <field name ="available_training_record" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

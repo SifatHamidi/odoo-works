@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<record id="vendors_dealers_inherit_page" model="ir.ui.view">
+          <field name="name">vendors.dealers.manufacture</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+            <notebook position="inside">
+            <!-- groups="purchase.group_purchase_manager" -->
+                <page string="Dealers" name="dealers">
+                    <field name="dealers_info" widget="many2many">
+                        <tree>
+                            <field name="email"/>
+                            <field name="phone_number"/>
+                        </tree>
+                    </field>
+                </page>   
+            </notebook>
+         </field>
+</record>
+
+
+</odoo>

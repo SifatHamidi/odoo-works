@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+          <record id="action_bista_training_topic" model="ir.actions.act_window">
+            <field name="name">Training Topics</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bista.training.topics</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new batch, the first step of a new one!
+              </p>
+              <p>
+                Trying to figure out
+              </p>
+            </field>
+        </record>
+
+
+          <record id="action_bista_training_subject" model="ir.actions.act_window">
+            <field name="name">Training Subject</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bista.training.subject</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new batch, the first step of a new one!
+              </p>
+              <p>
+                Trying to figure out
+              </p>
+            </field>
+        </record>
+
+
+        <record id="action_bista_trainer_batch" model="ir.actions.act_window">
+            <field name="name">Trainer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bista.trainer</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new batch, the first step of a new one!
+              </p>
+            </field>
+        </record>
+
+
+
+        <menuitem id ="bista_trainer_menu_root" 
+            name="Trainer" parent="bista_trainee_menu_root"
+            />
+        <menuitem id ="bista_trainer_menu2" 
+            name="Profile"
+            parent="bista_trainer_menu_root" sequence="1"
+            action="action_bista_trainer_batch"
+            />
+          <menuitem id ="bista_training_subject_menu_root" 
+            name="Training Subject" parent="bista_trainee_menu_root"
+            />
+          <menuitem id ="bista_training_subject_menu_2" 
+            name="Subject detail" parent="bista_training_subject_menu_root"
+            action="action_bista_training_subject"
+            />
+
+          <menuitem id ="bista_training_topic_menu_root" 
+            name="Topic detail" parent="bista_training_subject_menu_root"
+            action="action_bista_training_topic"
+            />
+
+</odoo>

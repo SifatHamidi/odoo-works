@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+    <record id="action_vendor_report_purchase_xlsx" model="ir.actions.report">
+        <field name="name">Vendor Report Purchase</field>
+        <field name="model">vendor.report.purchase.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">customer_membership_shifat.vendor_report_purchase_xlsx</field>
+        <field name="report_file">customer_membership_shifat.vendor_report_purchase_xlsx</field>
+        <field name="print_report_name">'Vendor-Report-%s'%(object.vendor_id)</field>
+        <field name="binding_model_id"  ref= "model_vendor_report_purchase_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

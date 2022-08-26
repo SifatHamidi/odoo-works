@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <data>
+
+        <record id="bista_trainee_email_template" model="mail.template">
+            <field name="name">Bista Trainee Email</field>
+            <field name="model_id" ref="bista_module.model_bista_trainee"/>
+            <field name="email_from">${object.email}</field>
+            <!-- <field name="partner_to">{{ object.partner_id.id }}</field> -->
+            <field name="email_to">${ object.email }</field>
+            <field name="subject">${ object.name }  Info (Ref ${ object.trainee_id})</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear ${object.name}
+                        <br /><br />
+                        Here is your profile information with ID  ${object.trainee_id}.
+                        <br /><br />
+                        Age: ${object.age}
+                        Emp Code: ${object.emp_code}
+                        Joining Date:${object.joining_date}
+                        <br /><br />
+                        If you have any queries please cotact this location of  ${object.location}.
+                    </p>
+                </div>
+            </field>
+            <field name="report_template" ref="report_bista_trainee"/>
+            <field name="report_name">Bista_Trainee_${(object.name)}</field>
+        </record>
+    </data>
+
+
+</odoo>

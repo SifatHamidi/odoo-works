@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+  <record id="product_inherit" model="ir.ui.view">
+            <field name="name">bista.qrcode</field>
+            <field name="model">bista.trainee</field>
+            <field name="inherit_id" ref="bista_module.bista_trainee_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name = 'joining_date']" position="after">
+              <field name="qr_code" widget='image' class="oe_avatar" />
+                </xpath>
+            </field>
+  </record>
+
+</odoo>
